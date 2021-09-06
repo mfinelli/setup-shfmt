@@ -9,6 +9,7 @@ const URLBASE = 'https://github.com/mvdan/sh'
 
 async function getLatestVersionUrl(): Promise<string> {
   return new Promise((resolve, reject) => {
+    console.log("url:",`${URLBASE}/releases/latest`)
     https.get(`${URLBASE}/releases/latest`, (res) => {
       const { statusCode } = res
 
