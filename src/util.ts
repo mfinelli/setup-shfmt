@@ -1,9 +1,9 @@
 export function extractVersionFromUrl(url: string): string {
-  const regex = /^https:\/\/github\.com\/mvdan\/sh\/releases\/tag\/v(.*)$/
-  const match = url.match(regex)
+  const regex = /^https:\/\/github\.com\/mvdan\/sh\/releases\/tag\/v(.*)$/;
+  const match = url.match(regex);
   if (match === null) {
-    return ''
+    return "";
   } else {
-    return match[1]
+    return match[1];
   }
 }

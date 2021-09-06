@@ -5,9 +5,9 @@ to the PATH.
 
 ## Inputs
 
-|Name           |Type  |Description                             |
-|---------------|------|----------------------------------------|
-|`shfmt-version`|String|The version to use or `latest` (default)|
+| Name            | Type   | Description                              |
+| --------------- | ------ | ---------------------------------------- |
+| `shfmt-version` | String | The version to use or `latest` (default) |
 
 ## Outputs
 
