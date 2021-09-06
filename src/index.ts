@@ -34,7 +34,9 @@ async function run(): Promise<void> {
   try {
     if ( version === 'latest') {
       let latestUrl = await getLatestVersionUrl()
+      console.log("latest url:", latestUrl)
       version = extractVersionFromUrl(latestUrl)
+      console.log("version:", version)
     }
 
     let url = `${URLBASE}/releases/download/v${version}`
@@ -55,6 +57,8 @@ async function run(): Promise<void> {
     if (process.platform === 'win32') {
       artifact += '.exe'
     }
+
+    console.log("artifact:", artifact)
 
     const binPath = `${os.homedir}/bin`
     await io.mkdirP(binPath)
