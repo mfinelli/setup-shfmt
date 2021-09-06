@@ -22,10 +22,11 @@ const https = __nccwpck_require__(211);
 const io = __nccwpck_require__(436);
 const os = __nccwpck_require__(87);
 const tc = __nccwpck_require__(784);
-const URLBASE = 'https://github.com/mvdan/sh';
+const util_1 = __nccwpck_require__(24);
+const URLBASE = "https://github.com/mvdan/sh";
 function getLatestVersionUrl() {
     return __awaiter(this, void 0, void 0, function* () {
-        core.info('in latest version url');
+        core.info("in latest version url");
         return new Promise((resolve, reject) => {
             core.info(`url:${URLBASE}/releases/latest`);
             https.get(`${URLBASE}/releases/latest`, (res) => {
@@ -33,55 +34,44 @@ function getLatestVersionUrl() {
                 if (statusCode !== 302) {
                     reject(new Error(`Unable to get latest release (status code: ${statusCode}`));
                 }
-                else if (String(res.headers['location']) === '') {
-                    reject(new Error(`Unable to get latest release (location: ${res.headers['location']})`));
+                else if (String(res.headers["location"]) === "") {
+                    reject(new Error(`Unable to get latest release (location: ${res.headers["location"]})`));
                 }
                 else {
-                    resolve(String(res.headers['location']));
+                    resolve(String(res.headers["location"]));
                 }
             });
         });
     });
 }
-function extractVersionFromUrl(url) {
-    core.info("in extract version from url");
-    const regex = /^https:\/\/github\.com\/mvdan\/sh\/releases\/tag\/v(.*)$/;
-    const match = url.match(regex);
-    if (match === null) {
-        return '';
-    }
-    else {
-        return match[1];
-    }
-}
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         core.info("in main run");
-        let version = core.getInput('shfmt-version');
+        let version = core.getInput("shfmt-version");
         core.info("passed version: " + version);
         try {
-            if (version === 'latest') {
+            if (version === "latest") {
                 let latestUrl = yield getLatestVersionUrl();
                 core.info("latest url:" + latestUrl);
-                version = extractVersionFromUrl(latestUrl);
+                version = (0, util_1.extractVersionFromUrl)(latestUrl);
                 core.info("version:" + version);
             }
             let url = `${URLBASE}/releases/download/v${version}`;
             let binName = "shfmt";
             let platform;
-            if (process.platform === 'win32') {
-                platform = 'windows';
-                binName += '.exe';
+            if (process.platform === "win32") {
+                platform = "windows";
+                binName += ".exe";
             }
-            else if (process.platform === 'darwin') {
-                platform = 'darwin';
+            else if (process.platform === "darwin") {
+                platform = "darwin";
             }
             else {
-                platform = 'linux';
+                platform = "linux";
             }
             let artifact = `shfmt_v${version}_${platform}_amd64`;
-            if (process.platform === 'win32') {
-                artifact += '.exe';
+            if (process.platform === "win32") {
+                artifact += ".exe";
             }
             core.info("artifact:" + artifact);
             const binPath = `${os.homedir}/bin`;
@@ -103,6 +93,28 @@ function run() {
 }
 run();
 //# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ 24:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.extractVersionFromUrl = void 0;
+function extractVersionFromUrl(url) {
+    const regex = /^https:\/\/github\.com\/mvdan\/sh\/releases\/tag\/v(.*)$/;
+    const match = url.match(regex);
+    if (match === null) {
+        return "";
+    }
+    else {
+        return match[1];
+    }
+}
+exports.extractVersionFromUrl = extractVersionFromUrl;
+//# sourceMappingURL=util.js.map
 
 /***/ }),
 
