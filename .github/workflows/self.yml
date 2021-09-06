@@ -3,7 +3,7 @@ name: Self
 on: [push, pull_request]
 
 jobs:
-  main:
+  latest:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -12,6 +12,22 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: ./
+      - if: ${{ matrix.os == 'windows-latest' }}
+        run: shfmt.exe -d test.bash
+      - if: ${{ matrix.os != 'windows-latest' }}
+        run: shfmt -d test.bash
+
+  fixed:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./
+        with:
+          shfmt-version: 3.3.1
       - if: ${{ matrix.os == 'windows-latest' }}
         run: shfmt.exe -d test.bash
       - if: ${{ matrix.os != 'windows-latest' }}
