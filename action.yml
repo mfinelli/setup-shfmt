@@ -2,6 +2,11 @@
 name: Setup shfmt
 description: Download the shfmt binary and add it to the PATH
 author: Mario Finelli
+inputs:
+  shfmt-version:
+    description: Version of shfmt to download
+    required: false
+    default: latest
 runs:
   using: node12
   main: dist/index.js
