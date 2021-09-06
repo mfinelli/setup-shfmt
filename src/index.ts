@@ -8,9 +8,11 @@ import * as tc from '@actions/tool-cache'
 const URLBASE = 'https://github.com/mvdan/sh'
 
 async function getLatestVersionUrl(): Promise<string> {
+  console.log('in latest version url')
   return new Promise((resolve, reject) => {
     console.log("url:",`${URLBASE}/releases/latest`)
     https.get(`${URLBASE}/releases/latest`, (res) => {
+      console.log("res:", res)
       const { statusCode } = res
 
       if (statusCode !== 302 ) {
@@ -25,6 +27,7 @@ async function getLatestVersionUrl(): Promise<string> {
 }
 
 function extractVersionFromUrl(url: string): string {
+  console.log("in extract version from url")
   const regex = /^https:\/\/github\.com\/mvdan\/sh\/releases\/tag\/v(.*)$/
   return String(url.match(regex))[1]
 }
