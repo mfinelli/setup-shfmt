@@ -4,8 +4,10 @@
   "description": "GitHub action to setup shfmt",
   "main": "lib/index.js",
   "scripts": {
-    "all": "npm run build && npm run package",
+    "all": "npm run lint && npm run test && npm run build && npm run package",
     "build": "tsc",
+    "fix": "prettier --write **/*.{ts,json,md}",
+    "lint": "prettier --check **/*.{ts,json,md}",
     "package": "ncc build --license licenses.txt",
     "test": "jest"
   },
@@ -33,6 +35,7 @@
     "@types/node": "^16.7.10",
     "@vercel/ncc": "^0.30.0",
     "jest": "^27.1.0",
+    "prettier": "^2.3.2",
     "ts-jest": "^27.0.5",
     "typescript": "^4.4.2"
   }
