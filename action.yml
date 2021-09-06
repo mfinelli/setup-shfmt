@@ -1,0 +1,7 @@
+---
+name: Setup shfmt
+description: Download the shfmt binary and add it to the PATH
+author: Mario Finelli
+runs:
+  using: node12
+  main: dist/index.js
