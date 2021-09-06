@@ -11,6 +11,15 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      # ensure that a PR that doesn't update the dist actually uses the
+      # updated code when it's running the self step
+      - if: github.event_name == 'pull_request'
+        run: npm ci && npm run build && npm run package
+
       - uses: ./
       - if: ${{ matrix.os == 'windows-latest' }}
         run: shfmt.exe -d test.bash
@@ -25,6 +34,15 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      # ensure that a PR that doesn't update the dist actually uses the
+      # updated code when it's running the self step
+      - if: github.event_name == 'pull_request'
+        run: npm ci && npm run build && npm run package
+
       - uses: ./
         with:
           shfmt-version: 3.3.1
