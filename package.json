@@ -1,0 +1,22 @@
+{
+  "name": "setup-shfmt",
+  "version": "0.1.0",
+  "description": "GitHub action to setup shfmt",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mfinelli/setup-shfmt.git"
+  },
+  "keywords": [
+    "shfmt"
+  ],
+  "author": "Mario Finelli",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/mfinelli/setup-shfmt/issues"
+  },
+  "homepage": "https://github.com/mfinelli/setup-shfmt#readme"
+}
