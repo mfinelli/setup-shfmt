@@ -1,4 +1,4 @@
-import {extractVersionFromUrl} from '../src/index'
+import {extractVersionFromUrl} from './util'
 
 describe('extractVersionFromUrl', () => {
   test('returns the expected version', () => {

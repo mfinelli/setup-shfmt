@@ -5,6 +5,8 @@ import * as io from '@actions/io'
 import * as os from 'os'
 import * as tc from '@actions/tool-cache'
 
+import {extractVersionFromUrl} from './util'
+
 const URLBASE = 'https://github.com/mvdan/sh'
 
 async function getLatestVersionUrl(): Promise<string> {
@@ -23,17 +25,6 @@ async function getLatestVersionUrl(): Promise<string> {
       }
     })
   })
-}
-
-export function extractVersionFromUrl(url: string): string {
-  core.info("in extract version from url")
-  const regex = /^https:\/\/github\.com\/mvdan\/sh\/releases\/tag\/v(.*)$/
-  const match = url.match(regex)
-  if (match === null) {
-    return ''
-  } else {
-    return match[1]
-  }
 }
 
 async function run(): Promise<void> {
