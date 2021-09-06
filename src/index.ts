@@ -28,7 +28,7 @@ function extractVersionFromUrl(url: string): string {
   return String(url.match(regex))[1]
 }
 
-export async function run(): Promise<void> {
+async function run(): Promise<void> {
   let version = core.getInput('shfmt-version')
 
   try {
@@ -70,3 +70,5 @@ export async function run(): Promise<void> {
     }
   }
 }
+
+run()
