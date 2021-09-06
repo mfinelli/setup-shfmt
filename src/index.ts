@@ -8,11 +8,11 @@ import * as tc from '@actions/tool-cache'
 const URLBASE = 'https://github.com/mvdan/sh'
 
 async function getLatestVersionUrl(): Promise<string> {
-  console.log('in latest version url')
+  core.info('in latest version url')
   return new Promise((resolve, reject) => {
-    console.log("url:",`${URLBASE}/releases/latest`)
+    core.info("url:",`${URLBASE}/releases/latest`)
     https.get(`${URLBASE}/releases/latest`, (res) => {
-      console.log("res:", res)
+      core.info("res:", res)
       const { statusCode } = res
 
       if (statusCode !== 302 ) {
@@ -27,22 +27,22 @@ async function getLatestVersionUrl(): Promise<string> {
 }
 
 function extractVersionFromUrl(url: string): string {
-  console.log("in extract version from url")
+  core.info("in extract version from url")
   const regex = /^https:\/\/github\.com\/mvdan\/sh\/releases\/tag\/v(.*)$/
   return String(url.match(regex))[1]
 }
 
 async function run(): Promise<void> {
-  console.log("in main run")
+  core.info("in main run")
   let version = core.getInput('shfmt-version')
-  console.log("passed version:", version)
+  core.info("passed version:", version)
 
   try {
     if ( version === 'latest') {
       let latestUrl = await getLatestVersionUrl()
-      console.log("latest url:", latestUrl)
+      core.info("latest url:", latestUrl)
       version = extractVersionFromUrl(latestUrl)
-      console.log("version:", version)
+      core.info("version:", version)
     }
 
     let url = `${URLBASE}/releases/download/v${version}`
@@ -64,7 +64,7 @@ async function run(): Promise<void> {
       artifact += '.exe'
     }
 
-    console.log("artifact:", artifact)
+    core.info("artifact:", artifact)
 
     const binPath = `${os.homedir}/bin`
     await io.mkdirP(binPath)
