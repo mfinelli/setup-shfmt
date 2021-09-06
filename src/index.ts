@@ -25,7 +25,7 @@ async function getLatestVersionUrl(): Promise<string> {
   })
 }
 
-function extractVersionFromUrl(url: string): string {
+export function extractVersionFromUrl(url: string): string {
   core.info("in extract version from url")
   const regex = /^https:\/\/github\.com\/mvdan\/sh\/releases\/tag\/v(.*)$/
   const match = url.match(regex)
