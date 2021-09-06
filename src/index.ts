@@ -33,7 +33,9 @@ function extractVersionFromUrl(url: string): string {
 }
 
 async function run(): Promise<void> {
+  console.log("in main run")
   let version = core.getInput('shfmt-version')
+  console.log("passed version:", version)
 
   try {
     if ( version === 'latest') {
