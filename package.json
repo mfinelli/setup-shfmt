@@ -2,8 +2,9 @@
   "name": "setup-shfmt",
   "version": "0.1.0",
   "description": "GitHub action to setup shfmt",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,5 +19,15 @@
   "bugs": {
     "url": "https://github.com/mfinelli/setup-shfmt/issues"
   },
-  "homepage": "https://github.com/mfinelli/setup-shfmt#readme"
+  "homepage": "https://github.com/mfinelli/setup-shfmt#readme",
+  "dependencies": {
+    "@actions/core": "^1.5.0",
+    "@actions/exec": "^1.1.0",
+    "@actions/io": "^1.1.1",
+    "@actions/tool-cache": "^1.7.1"
+  },
+  "devDependencies": {
+    "@types/node": "^16.7.10",
+    "typescript": "^4.4.2"
+  }
 }
