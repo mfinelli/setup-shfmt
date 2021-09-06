@@ -46,7 +46,13 @@ function getLatestVersionUrl() {
 function extractVersionFromUrl(url) {
     core.info("in extract version from url");
     const regex = /^https:\/\/github\.com\/mvdan\/sh\/releases\/tag\/v(.*)$/;
-    return String(url.match(regex))[1];
+    const match = url.match(regex);
+    if (match === null) {
+        return '';
+    }
+    else {
+        return match[1];
+    }
 }
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
