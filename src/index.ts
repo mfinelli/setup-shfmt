@@ -1,0 +1,72 @@
+import * as core from '@actions/core'
+import * as exec from '@actions/exec'
+import * as https from 'https'
+import * as io from '@actions/io'
+import * as os from 'os'
+import * as tc from '@actions/tool-cache'
+
+const URLBASE = 'https://github.com/mvdan/sh'
+
+async function getLatestVersionUrl(): Promise<string> {
+  return new Promise((resolve, reject) => {
+    https.get(`${URLBASE}/releases/latest`, (res) => {
+      const { statusCode } = res
+
+      if (statusCode !== 302 ) {
+        reject(new Error(`Unable to get latest release (status code: ${statusCode}`))
+      } else if (String(res.headers['location']) === '') {
+        reject(new Error(`Unable to get latest release (location: ${res.headers['location']})`))
+      } else {
+        resolve(String(res.headers['location']))
+      }
+    })
+  })
+}
+
+function extractVersionFromUrl(url: string): string {
+  const regex = /^https:\/\/github\.com\/mvdan\/sh\/releases\/tag\/v(.*)$/
+  return String(url.match(regex))[1]
+}
+
+export async function run(): Promise<void> {
+  let version = core.getInput('shfmt-version')
+
+  try {
+    if ( version === 'latest') {
+      let latestUrl = await getLatestVersionUrl()
+      version = extractVersionFromUrl(latestUrl)
+    }
+
+    let url = `${URLBASE}/releases/download/v${version}`
+    let binName = "shfmt"
+    let platform
+
+    if(process.platform === 'win32') {
+      platform = 'windows'
+      binName += '.exe'
+    } else if (process.platform === 'darwin') {
+      platform = 'darwin'
+    } else {
+      platform = 'linux'
+    }
+
+    let artifact = `shfmt_v${version}_${platform}_amd64`
+
+    if (process.platform === 'win32') {
+      artifact += '.exe'
+    }
+
+    const binPath = `${os.homedir}/bin`
+    await io.mkdirP(binPath)
+    const shfmtPath = await tc.downloadTool(`${url}/${artifact}`)
+    await io.mv(shfmtPath, `${binPath}/${binName}`)
+    exec.exec("chmod", ["+x", `${binPath}/${binName}`])
+    core.addPath(binPath)
+  } catch(error) {
+    if (error instanceof Error) {
+      core.setFailed(error.message)
+    } else {
+      core.setFailed("action failed and didn't return an error type!")
+    }
+  }
+}
