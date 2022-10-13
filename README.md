@@ -17,7 +17,7 @@ To use the latest `shfmt`:
 
 ```yaml
 steps:
-  - uses: mfinelli/setup-shfmt@v1
+  - uses: mfinelli/setup-shfmt@v2
   - run: shfmt -d script.bash
 ```
 
@@ -25,7 +25,7 @@ Or with a specific version:
 
 ```yaml
 steps:
-  - uses: mfinelli/setup-shfmt@v1
+  - uses: mfinelli/setup-shfmt@v2
     with:
       shfmt-version: 3.3.1
   - run: shfmt -d script.bash
