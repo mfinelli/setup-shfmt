@@ -34,13 +34,13 @@ async function getLatestVersionUrl(): Promise<string> {
 
       if (statusCode !== 302) {
         reject(
-          new Error(`Unable to get latest release (status code: ${statusCode}`)
+          new Error(`Unable to get latest release (status code: ${statusCode}`),
         );
       } else if (String(res.headers["location"]) === "") {
         reject(
           new Error(
-            `Unable to get latest release (location: ${res.headers["location"]})`
-          )
+            `Unable to get latest release (location: ${res.headers["location"]})`,
+          ),
         );
       } else {
         resolve(String(res.headers["location"]));
