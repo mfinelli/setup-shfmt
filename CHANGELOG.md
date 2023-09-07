@@ -1,6 +1,10 @@
 # setup-shfmt changelog
 
-## v2.0.0 (2022/1012)
+## v2.0.1 (2023/09/07)
+
+Upgrade dependencies
+
+## v2.0.0 (2022/10/12)
 
 Update to use node 16
 
