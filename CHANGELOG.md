@@ -1,5 +1,9 @@
 # setup-shfmt changelog
 
+## v3.0.1 (2023/09/18)
+
+Remove useless debug statements
+
 ## v3.0.0 (2023/09/18)
 
 Upgrade to node 20
