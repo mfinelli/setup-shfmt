@@ -26,9 +26,7 @@ import { extractVersionFromUrl } from "./util";
 const URLBASE = "https://github.com/mvdan/sh";
 
 async function getLatestVersionUrl(): Promise<string> {
-  core.info("in latest version url");
   return new Promise((resolve, reject) => {
-    core.info(`url:${URLBASE}/releases/latest`);
     https.get(`${URLBASE}/releases/latest`, (res) => {
       const { statusCode } = res;
 
@@ -50,16 +48,13 @@ async function getLatestVersionUrl(): Promise<string> {
 }
 
 async function run(): Promise<void> {
-  core.info("in main run");
   let version = core.getInput("shfmt-version");
-  core.info("passed version: " + version);
 
   try {
     if (version === "latest") {
       let latestUrl = await getLatestVersionUrl();
-      core.info("latest url:" + latestUrl);
       version = extractVersionFromUrl(latestUrl);
-      core.info("version:" + version);
+      core.info("Downloading shfmt version " + version + " from " + latestUrl);
     }
 
     let url = `${URLBASE}/releases/download/v${version}`;
@@ -80,8 +75,6 @@ async function run(): Promise<void> {
     if (process.platform === "win32") {
       artifact += ".exe";
     }
-
-    core.info("artifact:" + artifact);
 
     const binPath = `${os.homedir}/bin`;
     await io.mkdirP(binPath);

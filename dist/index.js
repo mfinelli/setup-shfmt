@@ -41,9 +41,7 @@ const util_1 = __nccwpck_require__(4024);
 const URLBASE = "https://github.com/mvdan/sh";
 function getLatestVersionUrl() {
     return __awaiter(this, void 0, void 0, function* () {
-        core.info("in latest version url");
         return new Promise((resolve, reject) => {
-            core.info(`url:${URLBASE}/releases/latest`);
             https.get(`${URLBASE}/releases/latest`, (res) => {
                 const { statusCode } = res;
                 if (statusCode !== 302) {
@@ -61,15 +59,12 @@ function getLatestVersionUrl() {
 }
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
-        core.info("in main run");
         let version = core.getInput("shfmt-version");
-        core.info("passed version: " + version);
         try {
             if (version === "latest") {
                 let latestUrl = yield getLatestVersionUrl();
-                core.info("latest url:" + latestUrl);
                 version = (0, util_1.extractVersionFromUrl)(latestUrl);
-                core.info("version:" + version);
+                core.info("Downloading shfmt version " + version + " from " + latestUrl);
             }
             let url = `${URLBASE}/releases/download/v${version}`;
             let binName = "shfmt";
@@ -88,7 +83,6 @@ function run() {
             if (process.platform === "win32") {
                 artifact += ".exe";
             }
-            core.info("artifact:" + artifact);
             const binPath = `${os.homedir}/bin`;
             yield io.mkdirP(binPath);
             const shfmtPath = yield tc.downloadTool(`${url}/${artifact}`);
