@@ -1,5 +1,9 @@
 # setup-shfmt changelog
 
+## v3.0.2 (2025/01/12)
+
+Upgrade dependencies
+
 ## v3.0.1 (2023/09/18)
 
 Remove useless debug statements

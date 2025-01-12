@@ -1,6 +1,6 @@
 {
   "name": "setup-shfmt",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "GitHub action to setup shfmt",
   "main": "lib/index.js",
   "scripts": {
