@@ -1,5 +1,9 @@
 # setup-shfmt changelog
 
+## v4.0.0 (2025/08/22)
+
+Upgrade to node 24
+
 ## v3.0.2 (2025/01/12)
 
 Upgrade dependencies
