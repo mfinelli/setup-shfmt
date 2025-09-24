@@ -4,7 +4,7 @@
   "description": "GitHub action to setup shfmt",
   "main": "lib/index.js",
   "scripts": {
-    "all": "npm run lint && npm run test && npm run build && npm run package",
+    "all": "pnpm run lint && pnpm run test && pnpm run build && pnpm run package",
     "build": "tsc",
     "fix": "prettier --write **/*.{ts,json,md}",
     "lint": "prettier --check **/*.{ts,json,md}",

@@ -11,14 +11,18 @@ jobs:
         os: [ubuntu-latest, macos-latest]
     steps:
       - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+        with:
+          version: latest
       - uses: actions/setup-node@v5
         with:
           node-version: '24'
+          cache: ${{ github.event_name == 'pull_request' && 'pnpm' || '' }}
 
       # ensure that a PR that doesn't update the dist actually uses the
       # updated code when it's running the self step
       - if: github.event_name == 'pull_request'
-        run: npm ci && npm run build && npm run package
+        run: pnpm install && pnpm run build && pnpm run package
 
       - uses: ./
       - if: ${{ matrix.os == 'windows-latest' }}
@@ -34,14 +38,18 @@ jobs:
         os: [ubuntu-latest, macos-latest]
     steps:
       - uses: actions/checkout@v5
+      - uses: pnpm/action-setup@v4
+        with:
+          version: latest
       - uses: actions/setup-node@v5
         with:
           node-version: '24'
+          cache: ${{ github.event_name == 'pull_request' && 'pnpm' || '' }}
 
       # ensure that a PR that doesn't update the dist actually uses the
       # updated code when it's running the self step
       - if: github.event_name == 'pull_request'
-        run: npm ci && npm run build && npm run package
+        run: pnpm install && pnpm run build && pnpm run package
 
       - uses: ./
         with:

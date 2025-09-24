@@ -1,0 +1,5 @@
+---
+minimumReleaseAge: 4320 # 3 days
+
+ignoredBuiltDependencies:
+  - unrs-resolver
