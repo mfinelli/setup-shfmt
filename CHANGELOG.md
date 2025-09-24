@@ -1,5 +1,9 @@
 # setup-shfmt changelog
 
+## v4.0.1 (2025/09/24)
+
+Switch internal tooling to use `pnpm` and update dependencies
+
 ## v4.0.0 (2025/08/22)
 
 Upgrade to node 24
