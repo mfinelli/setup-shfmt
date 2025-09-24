@@ -76,12 +76,17 @@ async function run(): Promise<void> {
       artifact += ".exe";
     }
 
-    const binPath = `${os.homedir}/bin`;
-    await io.mkdirP(binPath);
-    const shfmtPath = await tc.downloadTool(`${url}/${artifact}`);
-    await io.mv(shfmtPath, `${binPath}/${binName}`);
-    exec.exec("chmod", ["+x", `${binPath}/${binName}`]);
-    core.addPath(binPath);
+    if (process.platform === "win32") {
+      const shfmtPath = await tc.downloadTool(`${url}/${artifact}`);
+      core.addPath(shfmtPath);
+    } else {
+      const binPath = `${os.homedir}/bin`;
+      await io.mkdirP(binPath);
+      const shfmtPath = await tc.downloadTool(`${url}/${artifact}`);
+      await io.mv(shfmtPath, `${binPath}/${binName}`);
+      exec.exec("chmod", ["+x", `${binPath}/${binName}`]);
+      core.addPath(binPath);
+    }
   } catch (error) {
     if (error instanceof Error) {
       core.setFailed(error.message);
