@@ -21,7 +21,7 @@ import * as io from "@actions/io";
 import * as os from "os";
 import * as fs from "fs";
 import * as tc from "@actions/tool-cache";
-import * as path from 'path'
+import * as path from "path";
 
 import { extractVersionFromUrl } from "./util";
 
@@ -81,11 +81,9 @@ async function run(): Promise<void> {
     if (process.platform === "win32") {
       core.info("We're doing the thing...");
       const shfmtPath = await tc.downloadTool(`${url}/${artifact}`);
-      core.info(`Download path: ${shfmtPath}`)
-      core.info(`Basename: ${path.basename(shfmtPath)}`)
-      fs.readdirSync(shfmtPath).forEach(file => {
-        core.info("file: " + file)
-      })
+      core.info(`Download path: ${shfmtPath}`);
+      core.info(`Basename: ${path.basename(shfmtPath)}`);
+      io.mv(shfmtPath, path.join(path.dirname(shfmtPath), "shfmt.exe"));
       core.addPath(shfmtPath);
     } else {
       const binPath = `${os.homedir}/bin`;
