@@ -19,7 +19,9 @@ import * as exec from "@actions/exec";
 import * as https from "https";
 import * as io from "@actions/io";
 import * as os from "os";
+import * as fs from "fs";
 import * as tc from "@actions/tool-cache";
+import * as path from "path";
 
 import { extractVersionFromUrl } from "./util";
 
@@ -76,12 +78,21 @@ async function run(): Promise<void> {
       artifact += ".exe";
     }
 
-    const binPath = `${os.homedir}/bin`;
-    await io.mkdirP(binPath);
-    const shfmtPath = await tc.downloadTool(`${url}/${artifact}`);
-    await io.mv(shfmtPath, `${binPath}/${binName}`);
-    exec.exec("chmod", ["+x", `${binPath}/${binName}`]);
-    core.addPath(binPath);
+    if (process.platform === "win32") {
+      core.info("We're doing the thing...");
+      const shfmtPath = await tc.downloadTool(`${url}/${artifact}`);
+      core.info(`Download path: ${shfmtPath}`);
+      core.info(`Basename: ${path.basename(shfmtPath)}`);
+      io.mv(shfmtPath, path.join(path.dirname(shfmtPath), "shfmt.exe"));
+      core.addPath(shfmtPath);
+    } else {
+      const binPath = `${os.homedir}/bin`;
+      await io.mkdirP(binPath);
+      const shfmtPath = await tc.downloadTool(`${url}/${artifact}`);
+      await io.mv(shfmtPath, `${binPath}/${binName}`);
+      exec.exec("chmod", ["+x", `${binPath}/${binName}`]);
+      core.addPath(binPath);
+    }
   } catch (error) {
     if (error instanceof Error) {
       core.setFailed(error.message);
