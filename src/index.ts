@@ -70,11 +70,17 @@ async function run(): Promise<void> {
       platform = "linux";
     }
 
-    let artifact = `shfmt_v${version}_${platform}_amd64`;
+    const archMap: Record<string, string> = { x64: "amd64", arm64: "arm64", arm: "arm", ia32: "386" };
+    const arch = archMap[process.arch];
+    if (!arch) {
+      throw new Error(`Unsupported architecture: ${process.arch}`);
+    }
+    let artifact = `shfmt_v${version}_${platform}_${arch}`;
 
-    if (process.platform === "win32") {
+    if (platform === "windows") {
       artifact += ".exe";
     }
+    core.info(`Resolved artifact name: ${artifact}`);
 
     const binPath = `${os.homedir}/bin`;
     await io.mkdirP(binPath);
