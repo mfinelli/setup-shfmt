@@ -3,6 +3,7 @@
   "version": "4.0.1",
   "description": "GitHub action to setup shfmt",
   "main": "lib/index.js",
+  "type": "module",
   "scripts": {
     "all": "pnpm run lint && pnpm run test && pnpm run build && pnpm run package",
     "build": "tsc",
@@ -25,10 +26,10 @@
   },
   "homepage": "https://github.com/mfinelli/setup-shfmt#readme",
   "dependencies": {
-    "@actions/core": "^1.11.1",
-    "@actions/exec": "^1.1.1",
-    "@actions/io": "^1.1.3",
-    "@actions/tool-cache": "^2.0.2"
+    "@actions/core": "^3.0.0",
+    "@actions/exec": "^3.0.0",
+    "@actions/io": "^3.0.2",
+    "@actions/tool-cache": "^4.0.0"
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",
